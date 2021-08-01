@@ -1,6 +1,19 @@
 package io.github.kabirnayeem99.friends.utils
 
 
+/**
+ * Generic Resource class
+ * for more sophisticated status and
+ * error handling
+ *
+ * This sealed class holds, three state,
+ *
+ * [Success], which takes the data as a parameter
+ *
+ * [Error], which takes error message [String] as a param
+ *
+ * [Loading], which takes no param
+ */
 sealed class Resource<T>(
     val data: T? = null,
     val message: String? = null

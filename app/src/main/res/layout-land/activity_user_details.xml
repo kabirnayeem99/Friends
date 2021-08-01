@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="20sp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".ui.UserDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvPortrait">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvPortrait"
+                android:layout_width="200sp"
+                android:layout_height="200sp"
+                android:layout_gravity="center"
+                android:layout_margin="12sp"
+                android:elevation="0sp"
+
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivPortraitDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Portrait"
+                    android:scaleType="centerCrop" />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:id="@+id/tvFullNameDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Full Name"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="12sp"
+                android:background="@android:color/darker_gray" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvAddressDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="300sp"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="12sp"
+
+                android:background="@android:color/darker_gray" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="City, State, and Country"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCityDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="city, state, and country"
+
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="300sp"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="12sp"
+
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:id="@+id/llEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvEmailDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="300sp"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="12sp"
+
+                android:background="@android:color/darker_gray" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCellPhoneDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cell phone"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

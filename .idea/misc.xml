@@ -3,7 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/alex/AndroidStudioProjects/Friends/app/src/main/res/layout/activity_main.xml" value="0.32134831460674157" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Friends/app/src/main/res/drawable/ic_map.xml" value="0.16927083333333334" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Friends/app/src/main/res/layout-land/activity_landing.xml" value="0.12521891418563924" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Friends/app/src/main/res/layout-land/activity_user_details.xml" value="0.12521891418563924" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Friends/app/src/main/res/layout-land/list_item_user.xml" value="0.12521891418563924" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Friends/app/src/main/res/layout/activity_landing.xml" value="0.14895833333333333" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Friends/app/src/main/res/layout/activity_user_details.xml" value="0.14895833333333333" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Friends/app/src/main/res/layout/app_bar.xml" value="0.1" />
+        <entry key="..\:/Users/alex/AndroidStudioProjects/Friends/app/src/main/res/layout/list_item_user.xml" value="0.14895833333333333" />
       </map>
     </option>
   </component>
