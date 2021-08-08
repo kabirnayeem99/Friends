@@ -1,35 +1,32 @@
 package io.github.kabirnayeem99.friends.ui
 
-import android.content.Context
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.kabirnayeem99.friends.R
 import io.github.kabirnayeem99.friends.utils.Resource
 import io.github.kabirnayeem99.friends.utils.adapters.UserAdapter
 import io.github.kabirnayeem99.friends.viewmodels.UserViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
+import android.content.Intent
+
 
 @AndroidEntryPoint
 class LandingActivity : AppCompatActivity() {
 
     private lateinit var rvFriends: RecyclerView
     private lateinit var pbLoading: ProgressBar
+    private lateinit var ivNoInternet: ImageView
 
 
     @Inject
@@ -50,13 +47,16 @@ class LandingActivity : AppCompatActivity() {
     private fun initViews() {
         rvFriends = findViewById(R.id.rvFriends)
         pbLoading = findViewById(R.id.pbLoading)
+        ivNoInternet = findViewById(R.id.ivNoInternet)
     }
 
 
     private fun setUpObserver() {
+
         userViewModel.getUserList().observe(
             this@LandingActivity,
             { resource ->
+
 
                 when (resource) {
 
@@ -65,6 +65,9 @@ class LandingActivity : AppCompatActivity() {
 
                         // show the loading bar
                         pbLoading.visibility = View.VISIBLE
+                        ivNoInternet.visibility = View.GONE
+
+                        Log.d(TAG, "setUpObserver: loading state currently")
                     }
 
                     is Resource.Error -> {
@@ -73,24 +76,22 @@ class LandingActivity : AppCompatActivity() {
 
                         // hide the loading bar
                         pbLoading.visibility = View.GONE
-
-                        // show a toast message to inform the user
-                        Toast.makeText(
-                            this@LandingActivity,
-                            "Could not load from Internet",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        ivNoInternet.visibility = View.VISIBLE
+                        handleErrorSnackBar()
 
                     }
+
                     is Resource.Success -> {
 
                         // if there was no error,
 
                         // hide the loading bar
                         pbLoading.visibility = View.GONE
+                        ivNoInternet.visibility = View.GONE
 
                         // show the recycler view
                         rvFriends.visibility = View.VISIBLE
+
 
                         // and make the adapter differ consume the
                         // user list
@@ -100,6 +101,37 @@ class LandingActivity : AppCompatActivity() {
 
             },
         )
+
+    }
+
+    // shows snack bar based on error type
+    // if the error is due to the internet connection is off
+    // then it would show to turn on the internet
+    private fun handleErrorSnackBar() {
+
+        if (!userViewModel.getInternetConnectionStatus()) {
+            Snackbar.make(
+                findViewById(android.R.id.content),
+                "Your Internet Connection is off",
+                Snackbar.LENGTH_LONG
+            ).setAction(
+                "Turn On", View.OnClickListener {
+                    val intent = Intent("android.settings.WIFI_SETTINGS")
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                }
+            )
+                .show()
+
+        } else {
+            Snackbar.make(
+                findViewById(android.R.id.content),
+                "Something went wrong",
+                Snackbar.LENGTH_LONG
+            )
+                .show()
+
+        }
 
     }
 
@@ -125,5 +157,7 @@ class LandingActivity : AppCompatActivity() {
             adapter = userAdapter
         }
     }
+
+    private val TAG = "LandingActivity"
 
 }

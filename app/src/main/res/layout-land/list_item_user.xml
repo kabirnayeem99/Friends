@@ -5,14 +5,13 @@
     android:layout_width="300sp"
     android:layout_height="wrap_content"
     android:layout_margin="8sp"
-    android:backgroundTint="#f7f7f7"
     app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cvPortrait"
             android:layout_width="88sp"
             android:layout_height="88sp"

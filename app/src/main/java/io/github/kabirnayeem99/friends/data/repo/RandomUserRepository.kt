@@ -1,11 +1,11 @@
 package io.github.kabirnayeem99.friends.data.repo
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import io.github.kabirnayeem99.friends.data.services.ApiService
 import io.github.kabirnayeem99.friends.data.viewobject.ApiResponse
 import io.github.kabirnayeem99.friends.data.viewobject.User
 import io.github.kabirnayeem99.friends.utils.Resource
+import io.github.kabirnayeem99.friends.utils.Utilities
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,34 +20,65 @@ class RandomUserRepository @Inject constructor(var apiService: ApiService) {
     fun getUserList(): MutableLiveData<Resource<List<User>>> {
         val userLiveData = MutableLiveData<Resource<List<User>>>()
 
+
         // when the service starts, it takes time
-        // and for this mean time, show a loading status
-        userLiveData.postValue(Resource.Loading())
+        // and for this  time being, show a loading status
+        if (Utilities.isInternetAvailable()) {
+            userLiveData.postValue(Resource.Loading())
+        }
 
-        val call = apiService.getResponse()
+        try {
+            val call: Call<ApiResponse> = apiService.getResponse()
 
-        call.enqueue(object : Callback<ApiResponse> {
-            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+            call.enqueue(object : Callback<ApiResponse> {
+                override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
 
-                // with failure, assign the failure reasons to the resource error message
-                userLiveData.postValue(Resource.Error(t.message ?: "Unknown error occurred"))
-            }
-
-            override fun onResponse(
-                call: Call<ApiResponse>,
-                response: Response<ApiResponse>
-            ) {
-
-                // with success, post the data to the live data
-                val data: ApiResponse? = response.body()
-
-                if (data != null) {
-                    userLiveData.postValue(Resource.Success(data.userList))
+                    val userList = getUserListOnResponse(response)
+                    userLiveData.postValue(userList)
                 }
-            }
-        })
+
+                override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                    userLiveData.postValue(handleOnFailure(t))
+                }
+            })
+
+        } catch (e: Exception) {
+            handleOnFailure(e)
+        }
+
 
         return userLiveData
+    }
+
+    private fun handleOnFailure(t: Throwable): Resource<List<User>> {
+        return Resource.Error(
+            t.message ?: "Could not load the data from API"
+        )
+    }
+
+
+    private fun getUserListOnResponse(
+        response: Response<ApiResponse>
+    ): Resource<List<User>> {
+
+        if (!response.isSuccessful) {
+            return Resource.Error("Response was not successful")
+        }
+
+        if (response.code() != 200) {
+            return Resource.Error("Response code was no 200.")
+        }
+
+        if (response.body() == null) {
+            return Resource.Error("Response body was null.")
+        }
+
+        response.body()?.let { apiResponse ->
+            return Resource.Success(apiResponse.userList)
+        }
+
+        return Resource.Error("Response was not successful")
+
     }
 
 }
