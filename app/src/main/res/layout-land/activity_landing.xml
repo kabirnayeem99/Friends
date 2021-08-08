@@ -33,6 +33,7 @@
         android:id="@+id/rvFriends"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layoutAnimation="@anim/recycler_view_layout_animation"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

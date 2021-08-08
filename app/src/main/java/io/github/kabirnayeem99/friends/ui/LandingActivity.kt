@@ -155,6 +155,9 @@ class LandingActivity : AppCompatActivity() {
                 }
 
             adapter = userAdapter
+
+            overScrollMode = View.OVER_SCROLL_NEVER
+
         }
     }
 
