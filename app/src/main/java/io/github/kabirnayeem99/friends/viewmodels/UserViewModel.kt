@@ -43,7 +43,6 @@ class UserViewModel @Inject constructor(var repo: RandomUserRepository) : ViewMo
      * gets the list of the users from the repo
      */
     fun getUserList(): LiveData<Resource<List<User>>> {
-        Log.d(tag, "setUpObserver: getting user list ${userListLiveData.value}")
         return userListLiveData
     }
 
@@ -55,5 +54,4 @@ class UserViewModel @Inject constructor(var repo: RandomUserRepository) : ViewMo
     }
 
 
-    private val tag = "UserViewModel"
 }

@@ -3,7 +3,6 @@ package io.github.kabirnayeem99.friends.ui
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -27,6 +26,7 @@ class LandingActivity : AppCompatActivity() {
     private lateinit var rvFriends: RecyclerView
     private lateinit var pbLoading: ProgressBar
     private lateinit var ivNoInternet: ImageView
+    private lateinit var parentLayout: View
 
 
     @Inject
@@ -45,6 +45,7 @@ class LandingActivity : AppCompatActivity() {
 
 
     private fun initViews() {
+        parentLayout = findViewById(android.R.id.content)
         rvFriends = findViewById(R.id.rvFriends)
         pbLoading = findViewById(R.id.pbLoading)
         ivNoInternet = findViewById(R.id.ivNoInternet)
@@ -67,7 +68,6 @@ class LandingActivity : AppCompatActivity() {
                         pbLoading.visibility = View.VISIBLE
                         ivNoInternet.visibility = View.GONE
 
-                        Log.d(TAG, "setUpObserver: loading state currently")
                     }
 
                     is Resource.Error -> {
@@ -78,7 +78,6 @@ class LandingActivity : AppCompatActivity() {
                         pbLoading.visibility = View.GONE
                         ivNoInternet.visibility = View.VISIBLE
                         handleErrorSnackBar()
-
                     }
 
                     is Resource.Success -> {
@@ -109,27 +108,28 @@ class LandingActivity : AppCompatActivity() {
     // then it would show to turn on the internet
     private fun handleErrorSnackBar() {
 
+        val snackBar = Snackbar.make(parentLayout, "", Snackbar.LENGTH_SHORT)
+
+
         if (!userViewModel.getInternetConnectionStatus()) {
-            Snackbar.make(
-                findViewById(android.R.id.content),
-                "Your Internet Connection is off",
-                Snackbar.LENGTH_LONG
-            ).setAction(
-                "Turn On", View.OnClickListener {
-                    val intent = Intent("android.settings.WIFI_SETTINGS")
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
+            snackBar.setText("Your Internet Connection is off")
+
+            snackBar.setAction(
+                "Turn On"
+            ) {
+                try {
+                    launchWifiSettings()
+                } catch (e: Exception) {
+                    snackBar.setText("Could not open Wi-Fi setting")
+                    snackBar.show()
                 }
-            )
-                .show()
+            }
+
+            snackBar.show()
 
         } else {
-            Snackbar.make(
-                findViewById(android.R.id.content),
-                "Something went wrong",
-                Snackbar.LENGTH_LONG
-            )
-                .show()
+            snackBar.setText("Something went wrong")
+            snackBar.show()
 
         }
 
@@ -158,6 +158,11 @@ class LandingActivity : AppCompatActivity() {
         }
     }
 
-    private val TAG = "LandingActivity"
+    private fun launchWifiSettings() {
+        val intent = Intent("android.settings.WIFI_SETTINGS")
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
 
 }
