@@ -18,6 +18,7 @@ import io.github.kabirnayeem99.friends.utils.adapters.UserAdapter
 import io.github.kabirnayeem99.friends.viewmodels.UserViewModel
 import javax.inject.Inject
 import android.content.Intent
+import android.util.Log
 
 
 @AndroidEntryPoint
@@ -77,6 +78,9 @@ class LandingActivity : AppCompatActivity() {
                         // hide the loading bar
                         pbLoading.visibility = View.GONE
                         ivNoInternet.visibility = View.VISIBLE
+
+                        Log.e(tag, "setUpObserver: ${resource.message}")
+
                         handleErrorSnackBar()
                     }
 
@@ -167,5 +171,6 @@ class LandingActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private val tag = "LandingActivity"
 
 }
