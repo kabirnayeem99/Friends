@@ -7,7 +7,7 @@ This app follows MVVM architecture and uses Dagger-Hilt for dependency injection
 
 # Screenshots
 
-<img src="github_assets/landing_page_landscape_m.png"  height="600" />
+<img src="github_assets/landing_page_landscape_m.png"  width="600" />
 <img src="github_assets/landing_page.png"  height="600" />
 <img src="github_assets/details_page.png"  height="600" />
 <img src="github_assets/no_internet_page.png"  height="600" />
