@@ -20,14 +20,15 @@ import javax.inject.Inject
  * configuration of the app changes
  */
 @HiltViewModel
-class UserViewModel @Inject constructor(var repo: RandomUserRepository) : ViewModel() {
+class UserViewModel
+@Inject constructor(var repo: RandomUserRepository) : ViewModel() {
 
 
     // viewmodel will hold the state of live data
     // so that the configuration change doesn't need
     // a data reload
     // reducing both user annoyance and api reload
-    var userListLiveData = MutableLiveData<Resource<List<User>>>()
+    var userListLiveData: MutableLiveData<Resource<List<User>>>? = null
 
     var internetStatus: Boolean = true
 
@@ -39,12 +40,14 @@ class UserViewModel @Inject constructor(var repo: RandomUserRepository) : ViewMo
     }
 
 
+    // loads the internet status
     private fun loadInternetStatus() {
         internetStatus = Utilities.isInternetAvailable()
     }
 
+    // fetches the user list from the repository
     private fun fetchUserList() {
-        userListLiveData = repo.getUserList()
+        userListLiveData = repo.getUserList(userAmount = 10)
     }
 
 

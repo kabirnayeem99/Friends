@@ -6,6 +6,7 @@ import io.github.kabirnayeem99.friends.data.viewobject.ApiResponse
 import io.github.kabirnayeem99.friends.data.viewobject.User
 import io.github.kabirnayeem99.friends.utils.Resource
 import io.github.kabirnayeem99.friends.utils.Utilities
+import io.github.kabirnayeem99.friends.utils.constants.Constants
 import kotlinx.coroutines.CoroutineExceptionHandler
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,7 +19,7 @@ class RandomUserRepository @Inject constructor(var apiService: ApiService) {
     /**
      * Gets the User's list from the REST API
      */
-    fun getUserList(): MutableLiveData<Resource<List<User>>> {
+    fun getUserList(userAmount: Int): MutableLiveData<Resource<List<User>>> {
         val userLiveData = MutableLiveData<Resource<List<User>>>()
 
 
@@ -29,7 +30,7 @@ class RandomUserRepository @Inject constructor(var apiService: ApiService) {
         }
 
         try {
-            val call: Call<ApiResponse> = apiService.getResponse()
+            val call: Call<ApiResponse> = apiService.getResponse(userAmount)
 
             call.enqueue(object : Callback<ApiResponse> {
                 override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {

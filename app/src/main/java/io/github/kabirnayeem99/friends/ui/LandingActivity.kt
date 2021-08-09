@@ -19,7 +19,8 @@ import io.github.kabirnayeem99.friends.viewmodels.UserViewModel
 import javax.inject.Inject
 import android.content.Intent
 import android.util.Log
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import io.github.kabirnayeem99.friends.BuildConfig
+import io.github.kabirnayeem99.friends.utils.constants.Constants
 
 
 @AndroidEntryPoint
@@ -41,10 +42,8 @@ class LandingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
         initViews() // initialises the views by their id
-        setUpObserver() // sets up user list data observer from viewmodel
+        observeViewModel() // sets up user list data observer from viewmodel
         setUpRecyclerView() // sets up the recycler view
-
-
     }
 
 
@@ -56,12 +55,11 @@ class LandingActivity : AppCompatActivity() {
     }
 
 
-    private fun setUpObserver() {
+    private fun observeViewModel() {
 
         userViewModel.userListLiveData?.observe(
             this@LandingActivity,
             { resource ->
-
 
                 when (resource) {
 
@@ -82,9 +80,14 @@ class LandingActivity : AppCompatActivity() {
                         pbLoading.visibility = View.GONE
                         ivNoInternet.visibility = View.VISIBLE
 
-                        Log.e(tag, "setUpObserver: ${resource.message}")
 
-                        handleErrorSnackBar()
+                        // log the error message if its a debug build
+                        if (BuildConfig.DEBUG) {
+                            Log.e(tag, "setUpObserver: ${resource.message}")
+                        }
+
+                        // show snackbar based on the error type
+                        showErrorSnackbar()
                     }
 
                     is Resource.Success -> {
@@ -99,8 +102,7 @@ class LandingActivity : AppCompatActivity() {
                         rvFriends.visibility = View.VISIBLE
 
 
-                        // and make the adapter differ consume the
-                        // user list
+                        // and make the adapter differ consume the user list
                         userAdapter.differ.submitList(resource.data)
                     }
                 }
@@ -113,7 +115,7 @@ class LandingActivity : AppCompatActivity() {
     // shows snack bar based on error type
     // if the error is due to the internet connection is off
     // then it would show to turn on the internet
-    private fun handleErrorSnackBar() {
+    private fun showErrorSnackbar() {
 
         val snackBar = Snackbar.make(parentLayout, "Something went wrong", Snackbar.LENGTH_SHORT)
 
@@ -122,15 +124,19 @@ class LandingActivity : AppCompatActivity() {
             snackBar.setText("Your Internet Connection is off")
 
             snackBar.setAction(
-                "Turn On"
+                "TURN ON"
             ) {
                 try {
                     launchWifiSettings()
+
                 } catch (e: Exception) {
+
                     snackBar.setText("Could not open Wi-Fi settings")
                     snackBar.show()
+
                 }
             }
+
             snackBar.show()
 
         } else {
@@ -163,13 +169,15 @@ class LandingActivity : AppCompatActivity() {
 
             adapter = userAdapter
 
-            overScrollMode = View.OVER_SCROLL_NEVER
+            overScrollMode = View.OVER_SCROLL_NEVER // hide the overscroll effect
 
         }
     }
 
+    // launch wifi settings in another task
     private fun launchWifiSettings() {
-        val intent = Intent("nandroid.settings.WIFI_SETTINGS")
+        val intent = Intent(Constants.WIFI_SETTING_ACTION)
+        // opens the new activity in another task
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
