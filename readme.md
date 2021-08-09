@@ -1,10 +1,8 @@
 # Friends App Task
 
-**Friends** is a native Android Application, that I have developed as an assignment task given by
-the TBL LLC. This app uses [Random User API](https://randomuser.me/) for its backend.
+**Friends** is a native Android Application that uses [Random User API](https://randomuser.me/) for its backend.
 
-This app follows MVVM architecture, and makes use of modern android development tools, such as
-Kotlin, Kotlin Coroutine, and Dagger-Hilt.
+This app follows MVVM architecture and uses Dagger-Hilt for dependency injection.
 
 # Screenshots
 
