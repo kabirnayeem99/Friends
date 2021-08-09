@@ -10,17 +10,16 @@
     <application
         android:name=".FriendsApplication"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Friends"
-        tools:remove="android:appComponentFactory"
-        android:fullBackupContent="@xml/backup_descriptor">
+        tools:remove="android:appComponentFactory">
         <activity
             android:name=".ui.UserDetailsActivity"
-            android:exported="true"
-            android:parentActivityName=".ui.LandingActivity" />
+            android:exported="true" />
         <activity
             android:name=".ui.LandingActivity"
             android:exported="true">
