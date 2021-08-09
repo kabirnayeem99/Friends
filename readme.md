@@ -14,6 +14,8 @@ This app follows MVVM architecture and uses Dagger-Hilt for dependency injection
 
 ![no_internet page in portrait mode](github_assets/no_internet_page.png "No Internet page in Portrait")
 
+<img src="github_assets/no_internet_page.png" width="200" height="200" />
+
 # External Libraries
 
 1. **Retrofit**, for HTTP request
