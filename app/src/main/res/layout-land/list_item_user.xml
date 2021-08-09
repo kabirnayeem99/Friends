@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mcvUserCard"
-    android:layout_width="300sp"
+    android:layout_width="240sp"
     android:layout_height="wrap_content"
     android:layout_margin="8sp"
     app:cardCornerRadius="20dp">
