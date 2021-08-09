@@ -1,5 +1,6 @@
 package io.github.kabirnayeem99.friends.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,9 +35,9 @@ class UserViewModel
     var userListLiveData: MutableLiveData<Resource<List<User>>>? = null
 
     /**
-     * acknowledge if the internet is turned on or off
+     * acknowledges if the internet is turned on or off
      */
-    var internetStatus: Boolean = true
+    var internetStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     init {
         viewModelScope.launch {
@@ -48,17 +49,12 @@ class UserViewModel
 
     // loads the internet status
     private fun loadInternetStatus() {
-        internetStatus = Utilities.isInternetAvailable()
+        internetStatus.value = Utilities.isInternetAvailable()
     }
 
     // fetches the user list from the repository
     private fun fetchUserList() {
         userListLiveData = repo.getUserList(Constants.RANDOM_USER_AMOUNT)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        userListLiveData = null
     }
 
 }

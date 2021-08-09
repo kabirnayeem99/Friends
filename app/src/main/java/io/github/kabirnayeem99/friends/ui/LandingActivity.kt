@@ -117,38 +117,44 @@ class LandingActivity : AppCompatActivity() {
     // then it would show to turn on the internet
     private fun showErrorSnackBar() {
 
+        // create a snack bar with generic body, which can be changed based on the situation
         val snackBar = Snackbar.make(parentLayout, "Something went wrong", Snackbar.LENGTH_SHORT)
 
 
-        if (!userViewModel.internetStatus) {
+        userViewModel.internetStatus.observe(this, { internetStatus ->
+            if (!internetStatus) {
 
-            // shows this snack bar when internet is turned off
-            snackBar.setText("Your Internet Connection is off")
+                // shows this snack bar when internet is turned off
+                snackBar.setText("Your Internet Connection is off")
 
-            snackBar.setAction(
-                "TURN ON"
-            ) {
-                try {
-                    launchWifiSettings()
+                snackBar.setAction(
+                    "TURN ON"
+                ) {
+                    try {
+                        // to turn on the wifi launch the wifi settings
+                        launchWifiSettings()
 
-                } catch (e: Exception) {
+                    } catch (e: Exception) {
 
-                    snackBar.setText("Could not open Wi-Fi settings")
-                    snackBar.show()
+                        // if for some reason the wifi settings page could not be opened
+                        // show another toast message to inform the user it
+                        snackBar.setText("Could not open Wi-Fi settings")
+                        snackBar.show()
 
+                    }
                 }
+
+                snackBar.show()
+
+            } else {
+                snackBar.show()
+
             }
-
-            snackBar.show()
-
-        } else {
-            snackBar.show()
-
-        }
+        })
 
     }
 
-
+    // sets up the recycler with view adapter, layout manager and other configurations
     private fun setUpRecyclerView() {
 
 
@@ -162,9 +168,15 @@ class LandingActivity : AppCompatActivity() {
                  show a linear layout with 1 span count
              */
 
+            // span count in grid view
+            val gridViewItemAmount: Int = 3
+
             layoutManager =
                 if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    GridLayoutManager(this@LandingActivity, 3) // for landscape mode
+                    GridLayoutManager(
+                        this@LandingActivity,
+                        gridViewItemAmount
+                    ) // for landscape mode
                 } else {
                     LinearLayoutManager(this@LandingActivity) // for portrait mode
                 }
