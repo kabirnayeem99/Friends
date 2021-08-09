@@ -3,16 +3,15 @@ package io.github.kabirnayeem99.friends.ui
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import io.github.kabirnayeem99.friends.R
 import io.github.kabirnayeem99.friends.data.viewobject.User
 import android.content.Intent
 import android.net.Uri
 import com.google.android.material.card.MaterialCardView
+import io.github.kabirnayeem99.friends.R
+import io.github.kabirnayeem99.friends.utils.loadImage
 
 
 class UserDetailsActivity : AppCompatActivity() {
@@ -31,8 +30,22 @@ class UserDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_details)
         initViews()
+        showUpButton()
         getUserData()
     }
+
+    private fun showUpButton() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        supportActionBar?.title = "User Details"
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        super.onBackPressed()
+        return false
+    }
+
 
     private fun initViews() {
         ivPortraitDetails = findViewById(R.id.ivPortrait)
@@ -56,12 +69,8 @@ class UserDetailsActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun loadData(user: User) {
-        try {
-            Glide.with(this).load(user.picture.large).into(ivPortraitDetails)
-        } catch (e: Exception) {
-            Log.e(TAG, "loadData: could not load the image ${e.message ?: "Unknown error"}")
-        }
 
+        ivPortraitDetails.loadImage(user.picture.large)
         tvFullNameDetails.text = "${user.name.first} ${user.name.last}"
         tvAddressDetails.text = user.location.street.name
         tvCityDetails.text =
@@ -74,7 +83,7 @@ class UserDetailsActivity : AppCompatActivity() {
         }
 
         // sets the action bar title to the first name of the user
-        supportActionBar?.title = user.name.first
+        supportActionBar?.subtitle = "${user.name.first} ${user.name.last}"
 
     }
 
