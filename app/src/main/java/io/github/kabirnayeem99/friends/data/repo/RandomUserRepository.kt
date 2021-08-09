@@ -13,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class RandomUserRepository @Inject constructor(var apiService: ApiService) {
+class RandomUserRepository @Inject constructor(private var apiService: ApiService) {
 
 
     /**

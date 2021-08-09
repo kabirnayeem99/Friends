@@ -14,7 +14,6 @@ package io.github.kabirnayeem99.friends.utils
  *
  * [Loading], which takes no param
  *
- * [NoInternet], which also takes no param
  */
 sealed class Resource<T>(
     val data: T? = null,

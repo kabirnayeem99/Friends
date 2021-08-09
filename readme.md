@@ -1,4 +1,4 @@
-# Freinds App Task
+# Friends App Task
 
 **Friends** is a native Android Application, that I have developed as an assignment task given by
 the TBL LLC. This app uses [Random User API](https://randomuser.me/) for its backend.

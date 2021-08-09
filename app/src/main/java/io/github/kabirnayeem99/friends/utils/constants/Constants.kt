@@ -9,5 +9,5 @@ package io.github.kabirnayeem99.friends.utils.constants
 object Constants {
     const val WIFI_SETTING_ACTION: String = "android.settings.WIFI_SETTINGS"
     const val BASE_URL: String = "https://randomuser.me/api/"
-    const val RANDOM_USER_AMOUNT: Int = 10;
+    const val RANDOM_USER_AMOUNT: Int = 10
 }

@@ -10,6 +10,7 @@ import io.github.kabirnayeem99.friends.data.repo.RandomUserRepository
 import io.github.kabirnayeem99.friends.data.viewobject.User
 import io.github.kabirnayeem99.friends.utils.Resource
 import io.github.kabirnayeem99.friends.utils.Utilities
+import io.github.kabirnayeem99.friends.utils.constants.Constants
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -21,10 +22,10 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class UserViewModel
-@Inject constructor(var repo: RandomUserRepository) : ViewModel() {
+@Inject constructor(private var repo: RandomUserRepository) : ViewModel() {
 
 
-    // viewmodel will hold the state of live data
+    // view model will hold the state of live data
     // so that the configuration change doesn't need
     // a data reload
     // reducing both user annoyance and api reload
@@ -47,7 +48,7 @@ class UserViewModel
 
     // fetches the user list from the repository
     private fun fetchUserList() {
-        userListLiveData = repo.getUserList(userAmount = 10)
+        userListLiveData = repo.getUserList(Constants.RANDOM_USER_AMOUNT)
     }
 
 

@@ -17,14 +17,14 @@ import com.google.android.material.card.MaterialCardView
 
 class UserDetailsActivity : AppCompatActivity() {
 
-    lateinit var ivPortraitDetails: ImageView
-    lateinit var tvFullNameDetails: TextView
-    lateinit var tvAddressDetails: TextView
-    lateinit var tvCityDetails: TextView
-    lateinit var tvEmailDetails: TextView
-    lateinit var tvCellPhoneDetails: TextView
-    lateinit var llEmail: LinearLayout
-    lateinit var mcvUserCard: MaterialCardView
+    private lateinit var ivPortraitDetails: ImageView
+    private lateinit var tvFullNameDetails: TextView
+    private lateinit var tvAddressDetails: TextView
+    private lateinit var tvCityDetails: TextView
+    private lateinit var tvEmailDetails: TextView
+    private lateinit var tvCellPhoneDetails: TextView
+    private lateinit var llEmail: LinearLayout
+    private lateinit var mcvUserCard: MaterialCardView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

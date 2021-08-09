@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Random Friends</string>
+    <string name="contentDescriptionUserProfilePhoto">User\'s Profile Picture</string>
+    <string name="full_name">Full Name</string>
+    <string name="address">Address</string>
+    <string name="city_state_and_country">City, State, and Country</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="map_icon">Map Icon</string>
 </resources>

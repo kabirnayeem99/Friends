@@ -42,7 +42,7 @@ class LandingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
         initViews() // initialises the views by their id
-        observeViewModel() // sets up user list data observer from viewmodel
+        observeViewModel() // sets up user list data observer from view model
         setUpRecyclerView() // sets up the recycler view
     }
 
@@ -86,8 +86,8 @@ class LandingActivity : AppCompatActivity() {
                             Log.e(tag, "setUpObserver: ${resource.message}")
                         }
 
-                        // show snackbar based on the error type
-                        showErrorSnackbar()
+                        // show snack bar based on the error type
+                        showErrorSnackBar()
                     }
 
                     is Resource.Success -> {
@@ -115,7 +115,7 @@ class LandingActivity : AppCompatActivity() {
     // shows snack bar based on error type
     // if the error is due to the internet connection is off
     // then it would show to turn on the internet
-    private fun showErrorSnackbar() {
+    private fun showErrorSnackBar() {
 
         val snackBar = Snackbar.make(parentLayout, "Something went wrong", Snackbar.LENGTH_SHORT)
 

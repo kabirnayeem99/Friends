@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Friends"
-        tools:remove="android:appComponentFactory">
+        tools:remove="android:appComponentFactory"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity
             android:name=".ui.UserDetailsActivity"
             android:exported="true"

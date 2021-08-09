@@ -33,7 +33,7 @@ import javax.inject.Inject
 class UserAdapter @Inject constructor() : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
 
-    inner class UserViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+    inner class UserViewHolder(private var view: View) : RecyclerView.ViewHolder(view) {
         private val context: Context = view.context
 
         private var tvFullName: TextView = view.findViewById(R.id.tvFullName)
@@ -64,7 +64,7 @@ class UserAdapter @Inject constructor() : RecyclerView.Adapter<UserAdapter.UserV
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val context = parent.context;
+        val context = parent.context
         val inflater = LayoutInflater.from(context)
 
         val userCard = inflater.inflate(R.layout.list_item_user, parent, false)
@@ -119,7 +119,4 @@ class UserAdapter @Inject constructor() : RecyclerView.Adapter<UserAdapter.UserV
      */
     val differ = AsyncListDiffer(this, diffCallback)
 
-    companion object {
-        private const val TAG = "UserAdapter"
-    }
 }
