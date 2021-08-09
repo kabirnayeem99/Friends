@@ -10,7 +10,7 @@ import io.github.kabirnayeem99.friends.data.repo.RandomUserRepository
 import io.github.kabirnayeem99.friends.data.viewobject.User
 import io.github.kabirnayeem99.friends.utils.Resource
 import io.github.kabirnayeem99.friends.utils.Utilities
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 
@@ -27,30 +27,24 @@ class UserViewModel @Inject constructor(var repo: RandomUserRepository) : ViewMo
     // so that the configuration change doesn't need
     // a data reload
     // reducing both user annoyance and api reload
-    private var userListLiveData = MutableLiveData<Resource<List<User>>>()
+    var userListLiveData = MutableLiveData<Resource<List<User>>>()
 
-    private var internetStatus: Boolean = true
+    var internetStatus: Boolean = true
 
     init {
         viewModelScope.launch {
-            userListLiveData = repo.getUserList()
-            internetStatus = Utilities.isInternetAvailable()
+            loadInternetStatus()
+            fetchUserList()
         }
     }
 
 
-    /**
-     * gets the list of the users from the repo
-     */
-    fun getUserList(): LiveData<Resource<List<User>>> {
-        return userListLiveData
+    private fun loadInternetStatus() {
+        internetStatus = Utilities.isInternetAvailable()
     }
 
-    /**
-     * gets the internet connection state
-     */
-    fun getInternetConnectionStatus(): Boolean {
-        return internetStatus
+    private fun fetchUserList() {
+        userListLiveData = repo.getUserList()
     }
 
 

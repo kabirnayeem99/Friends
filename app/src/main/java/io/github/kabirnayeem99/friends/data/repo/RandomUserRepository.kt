@@ -6,6 +6,7 @@ import io.github.kabirnayeem99.friends.data.viewobject.ApiResponse
 import io.github.kabirnayeem99.friends.data.viewobject.User
 import io.github.kabirnayeem99.friends.utils.Resource
 import io.github.kabirnayeem99.friends.utils.Utilities
+import kotlinx.coroutines.CoroutineExceptionHandler
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

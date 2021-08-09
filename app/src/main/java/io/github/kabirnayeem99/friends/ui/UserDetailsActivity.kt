@@ -3,7 +3,6 @@ package io.github.kabirnayeem99.friends.ui
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.service.autofill.UserData
 import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -11,9 +10,9 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import io.github.kabirnayeem99.friends.R
 import io.github.kabirnayeem99.friends.data.viewobject.User
-import org.w3c.dom.Text
 import android.content.Intent
 import android.net.Uri
+import com.google.android.material.card.MaterialCardView
 
 
 class UserDetailsActivity : AppCompatActivity() {
@@ -25,6 +24,7 @@ class UserDetailsActivity : AppCompatActivity() {
     lateinit var tvEmailDetails: TextView
     lateinit var tvCellPhoneDetails: TextView
     lateinit var llEmail: LinearLayout
+    lateinit var mcvUserCard: MaterialCardView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,13 +35,14 @@ class UserDetailsActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        ivPortraitDetails = findViewById(R.id.ivPortraitDetails)
+        ivPortraitDetails = findViewById(R.id.ivPortrait)
         tvFullNameDetails = findViewById(R.id.tvFullNameDetails)
         tvAddressDetails = findViewById(R.id.tvAddressDetails)
         tvCityDetails = findViewById(R.id.tvCityDetails)
         tvEmailDetails = findViewById(R.id.tvEmailDetails)
         tvCellPhoneDetails = findViewById(R.id.tvCellPhoneDetails)
         llEmail = findViewById(R.id.llEmail)
+        mcvUserCard = findViewById(R.id.mcvUserCard)
     }
 
     private fun getUserData() {

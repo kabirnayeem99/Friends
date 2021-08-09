@@ -1,6 +1,7 @@
 package io.github.kabirnayeem99.friends.utils.adapters
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +21,7 @@ import io.github.kabirnayeem99.friends.R
 import io.github.kabirnayeem99.friends.data.viewobject.User
 import io.github.kabirnayeem99.friends.ui.UserDetailsActivity
 import io.github.kabirnayeem99.friends.ui.UserDetailsActivity.Companion.USER_DATA
+import io.github.kabirnayeem99.friends.utils.loadImage
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -28,11 +32,15 @@ import javax.inject.Inject
  */
 class UserAdapter @Inject constructor() : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
+
     inner class UserViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
+        private val context: Context = view.context
+
         private var tvFullName: TextView = view.findViewById(R.id.tvFullName)
         private var tvCountry: TextView = view.findViewById(R.id.tvCountry)
         private var ivPortrait: ImageView = view.findViewById(R.id.ivPortrait)
         private var mcvUserCard: MaterialCardView = view.findViewById(R.id.mcvUserCard)
+
 
         /**
          * Will bind the user object to the
@@ -42,17 +50,14 @@ class UserAdapter @Inject constructor() : RecyclerView.Adapter<UserAdapter.UserV
         fun bindTo(user: User) {
             tvFullName.text = "${user.name.first} ${user.name.last}"
             tvCountry.text = user.location.country
+            ivPortrait.loadImage(user.picture.medium)
 
-            try {
-                Glide.with(view.context).load(user.picture.medium).into(ivPortrait)
-            } catch (e: Exception) {
-                Log.d(TAG, "bindTo: image could not be loaded ${e.message}")
-            }
 
             mcvUserCard.setOnClickListener {
                 val intent = Intent(view.context, UserDetailsActivity::class.java)
+                // passes the user object to the user details activity
                 intent.putExtra(USER_DATA, user)
-                view.context.startActivity(intent)
+                context.startActivity(intent)
             }
 
         }
@@ -82,10 +87,9 @@ class UserAdapter @Inject constructor() : RecyclerView.Adapter<UserAdapter.UserV
             }
 
             override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-                /*
-                     as only image, country, and name would be shown,
-                     no need to add comparison between other contents
-                 */
+
+                // as only image, country, and name would be shown,
+                // no need to add comparison between other contents
 
                 if (oldItem.location.country != newItem.location.country) {
                     return false
@@ -106,6 +110,7 @@ class UserAdapter @Inject constructor() : RecyclerView.Adapter<UserAdapter.UserV
                 return true
             }
         }
+
 
     /**
      * This will consume the list of users from the user list live data

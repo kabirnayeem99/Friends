@@ -19,6 +19,7 @@ import io.github.kabirnayeem99.friends.viewmodels.UserViewModel
 import javax.inject.Inject
 import android.content.Intent
 import android.util.Log
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 
 @AndroidEntryPoint
@@ -42,6 +43,8 @@ class LandingActivity : AppCompatActivity() {
         initViews() // initialises the views by their id
         setUpObserver() // sets up user list data observer from viewmodel
         setUpRecyclerView() // sets up the recycler view
+
+
     }
 
 
@@ -55,7 +58,7 @@ class LandingActivity : AppCompatActivity() {
 
     private fun setUpObserver() {
 
-        userViewModel.getUserList().observe(
+        userViewModel.userListLiveData?.observe(
             this@LandingActivity,
             { resource ->
 
@@ -112,10 +115,10 @@ class LandingActivity : AppCompatActivity() {
     // then it would show to turn on the internet
     private fun handleErrorSnackBar() {
 
-        val snackBar = Snackbar.make(parentLayout, "", Snackbar.LENGTH_SHORT)
+        val snackBar = Snackbar.make(parentLayout, "Something went wrong", Snackbar.LENGTH_SHORT)
 
 
-        if (!userViewModel.getInternetConnectionStatus()) {
+        if (!userViewModel.internetStatus) {
             snackBar.setText("Your Internet Connection is off")
 
             snackBar.setAction(
@@ -124,15 +127,13 @@ class LandingActivity : AppCompatActivity() {
                 try {
                     launchWifiSettings()
                 } catch (e: Exception) {
-                    snackBar.setText("Could not open Wi-Fi setting")
+                    snackBar.setText("Could not open Wi-Fi settings")
                     snackBar.show()
                 }
             }
-
             snackBar.show()
 
         } else {
-            snackBar.setText("Something went wrong")
             snackBar.show()
 
         }
@@ -141,6 +142,8 @@ class LandingActivity : AppCompatActivity() {
 
 
     private fun setUpRecyclerView() {
+
+
         rvFriends.apply {
 
             /*
@@ -166,10 +169,11 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun launchWifiSettings() {
-        val intent = Intent("android.settings.WIFI_SETTINGS")
+        val intent = Intent("nandroid.settings.WIFI_SETTINGS")
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
+
 
     private val tag = "LandingActivity"
 

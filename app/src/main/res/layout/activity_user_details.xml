@@ -15,6 +15,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcvUserCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12sp"
@@ -45,7 +46,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/ivPortraitDetails"
+                        android:id="@+id/ivPortrait"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="Portrait"

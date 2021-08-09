@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.github.kabirnayeem99.friends.data.repo.RandomUserRepository
+import io.github.kabirnayeem99.friends.BuildConfig
 import io.github.kabirnayeem99.friends.data.services.ApiService
 import io.github.kabirnayeem99.friends.utils.constants.Constants.BASE_URL
 import okhttp3.OkHttpClient
@@ -19,10 +19,22 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
-        .apply {
-            level = HttpLoggingInterceptor.Level.NONE
-        }
+    fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor {
+
+        // if the app is in debug mode, show the logs
+        // else don't show any log
+        val levelType: HttpLoggingInterceptor.Level =
+            if (BuildConfig.BUILD_TYPE.contentEquals("debug"))
+                HttpLoggingInterceptor.Level.BODY
+            else
+                HttpLoggingInterceptor.Level.NONE
+
+
+        return HttpLoggingInterceptor()
+            .apply {
+                level = levelType
+            }
+    }
 
 
     @Singleton
