@@ -12,7 +12,6 @@ import io.github.kabirnayeem99.friends.utils.adapters.UserAdapter
 class ActivityModule {
 
     @Provides
-    fun provideUserAdapter(): UserAdapter {
-        return UserAdapter()
-    }
+    fun provideUserAdapter(): UserAdapter = UserAdapter()
+
 }

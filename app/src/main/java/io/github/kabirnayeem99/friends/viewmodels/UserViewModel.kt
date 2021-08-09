@@ -29,8 +29,15 @@ class UserViewModel
     // so that the configuration change doesn't need
     // a data reload
     // reducing both user annoyance and api reload
+
+    /**
+     * user live data that provides user data list
+     */
     var userListLiveData: MutableLiveData<Resource<List<User>>>? = null
 
+    /**
+     * acknowledge if the internet is turned on or off
+     */
     var internetStatus: Boolean = true
 
     init {
@@ -51,5 +58,9 @@ class UserViewModel
         userListLiveData = repo.getUserList(Constants.RANDOM_USER_AMOUNT)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        userListLiveData = null
+    }
 
 }

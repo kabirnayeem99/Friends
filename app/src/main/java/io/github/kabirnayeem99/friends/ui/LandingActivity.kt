@@ -1,26 +1,26 @@
 package io.github.kabirnayeem99.friends.ui
 
+import android.content.Intent
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.kabirnayeem99.friends.BuildConfig
 import io.github.kabirnayeem99.friends.R
 import io.github.kabirnayeem99.friends.utils.Resource
 import io.github.kabirnayeem99.friends.utils.adapters.UserAdapter
+import io.github.kabirnayeem99.friends.utils.constants.Constants
 import io.github.kabirnayeem99.friends.viewmodels.UserViewModel
 import javax.inject.Inject
-import android.content.Intent
-import android.util.Log
-import io.github.kabirnayeem99.friends.BuildConfig
-import io.github.kabirnayeem99.friends.utils.constants.Constants
 
 
 @AndroidEntryPoint
@@ -121,6 +121,8 @@ class LandingActivity : AppCompatActivity() {
 
 
         if (!userViewModel.internetStatus) {
+
+            // shows this snack bar when internet is turned off
             snackBar.setText("Your Internet Connection is off")
 
             snackBar.setAction(
