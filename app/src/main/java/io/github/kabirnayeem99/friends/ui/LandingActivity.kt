@@ -164,7 +164,7 @@ class LandingActivity : AppCompatActivity() {
 
             layoutManager =
                 if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    GridLayoutManager(this@LandingActivity, 2) // for landscape mode
+                    GridLayoutManager(this@LandingActivity, 3) // for landscape mode
                 } else {
                     LinearLayoutManager(this@LandingActivity) // for portrait mode
                 }
