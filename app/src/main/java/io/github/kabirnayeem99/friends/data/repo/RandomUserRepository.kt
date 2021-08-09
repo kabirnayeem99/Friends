@@ -68,11 +68,11 @@ class RandomUserRepository @Inject constructor(private var apiService: ApiServic
         }
 
         if (response.code() != 200) {
-            return Resource.Error("Response code was no 200.")
+            return Resource.Error("Response code was ${response.code()}")
         }
 
         if (response.body() == null) {
-            return Resource.Error("Response body was null.")
+            return Resource.Error("Response body or [ApiResponse] was null.")
         }
 
         response.body()?.let { apiResponse ->
