@@ -1,7 +1,5 @@
 package io.github.kabirnayeem99.friends.viewmodels
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,9 +14,9 @@ import javax.inject.Inject
 
 
 /**
- * ViewModel object to make SoC happen
- * It also helps to hold the data, when the
- * configuration of the app changes
+ * ViewModel object that sits between the ui and back-end of the application
+ *
+ * which notifies the ui to change when there is a change in the back-end
  */
 @HiltViewModel
 class UserViewModel
