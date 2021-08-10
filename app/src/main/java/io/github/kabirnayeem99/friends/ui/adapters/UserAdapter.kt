@@ -1,28 +1,22 @@
-package io.github.kabirnayeem99.friends.utils.adapters
+package io.github.kabirnayeem99.friends.ui.adapters
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import io.github.kabirnayeem99.friends.R
 import io.github.kabirnayeem99.friends.data.viewobject.User
-import io.github.kabirnayeem99.friends.ui.UserDetailsActivity
-import io.github.kabirnayeem99.friends.ui.UserDetailsActivity.Companion.USER_DATA
+import io.github.kabirnayeem99.friends.ui.activities.UserDetailsActivity
+import io.github.kabirnayeem99.friends.ui.activities.UserDetailsActivity.Companion.USER_DATA
 import io.github.kabirnayeem99.friends.utils.loadImage
-import java.lang.Exception
 import javax.inject.Inject
 
 /**

@@ -1,4 +1,4 @@
-package io.github.kabirnayeem99.friends.ui
+package io.github.kabirnayeem99.friends.ui.activities
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.kabirnayeem99.friends.BuildConfig
 import io.github.kabirnayeem99.friends.R
 import io.github.kabirnayeem99.friends.utils.Resource
-import io.github.kabirnayeem99.friends.utils.adapters.UserAdapter
+import io.github.kabirnayeem99.friends.ui.adapters.UserAdapter
 import io.github.kabirnayeem99.friends.utils.constants.Constants
 import io.github.kabirnayeem99.friends.viewmodels.UserViewModel
 import javax.inject.Inject

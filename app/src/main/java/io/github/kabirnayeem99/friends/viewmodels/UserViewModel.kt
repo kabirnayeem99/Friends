@@ -29,15 +29,40 @@ class UserViewModel
     // a data reload
     // reducing both user annoyance and api reload
 
-    /**
-     * user live data that provides user data list
-     */
-    var userListLiveData: MutableLiveData<Resource<List<User>>>? = null
+    // to avoid modifiable state leaked to the UI
+    private var userListLiveDataPrivate: MutableLiveData<Resource<List<User>>>? = null
+
+    // to avoid modifiable state leaked to the UI
+    private var internetStatusPrivate: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
 
     /**
-     * acknowledges if the internet is turned on or off
+     * This is an observable which provides user data,
+     * and notifies the UI when the state of the User list changes
+     *
+     * It returns a [LiveData] of [User] [List], wrapped with [Resource] sealed class
+     *
+     * Here, [Resource.Success] means that there is a list of [User] in the live data
+     *
+     * Here, [Resource.Error] means that there is no data, rather a error message to acknowledge
+     * about the issue
+     *
+     * Here, [Resource.Loading] means that the data is still loading, and there is not error messge
+     * or data in the stream
+     *
      */
-    var internetStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    var userListLiveData: LiveData<Resource<List<User>>>? = userListLiveDataPrivate
+
+
+    /**
+     * This is a lifecycle aware observable, which notifies the ui,
+     * if the internet status of the application has been changed
+     *
+     * It provides [TRUE] value if the internet is connected,
+     * or else returns [FALSE] value.
+     */
+    var internetStatus: LiveData<Boolean> = internetStatusPrivate
+
 
     init {
         viewModelScope.launch {
@@ -49,12 +74,12 @@ class UserViewModel
 
     // loads the internet status
     private fun loadInternetStatus() {
-        internetStatus.value = Utilities.isInternetAvailable()
+        internetStatusPrivate.value = Utilities.isInternetAvailable()
     }
 
     // fetches the user list from the repository
     private fun fetchUserList() {
-        userListLiveData = repo.getUserList(Constants.RANDOM_USER_AMOUNT)
+        userListLiveDataPrivate = repo.getUserList(Constants.RANDOM_USER_AMOUNT)
     }
 
 }

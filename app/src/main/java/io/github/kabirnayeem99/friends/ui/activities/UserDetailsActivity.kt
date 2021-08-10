@@ -1,4 +1,4 @@
-package io.github.kabirnayeem99.friends.ui
+package io.github.kabirnayeem99.friends.ui.activities
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,7 @@ import android.widget.TextView
 import io.github.kabirnayeem99.friends.data.viewobject.User
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import com.google.android.material.card.MaterialCardView
 import io.github.kabirnayeem99.friends.R
 import io.github.kabirnayeem99.friends.utils.loadImage
@@ -34,6 +35,8 @@ class UserDetailsActivity : AppCompatActivity() {
         getUserData()
     }
 
+    // shows the back button in the action bar
+    // and sets the title to the "User Details"
     private fun showUpButton() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -41,6 +44,8 @@ class UserDetailsActivity : AppCompatActivity() {
 
     }
 
+    // change the navigate up functionality to the onBackPressed
+    // so that, the activity in the back stack gets loaded
     override fun onSupportNavigateUp(): Boolean {
         super.onBackPressed()
         return false
@@ -58,19 +63,24 @@ class UserDetailsActivity : AppCompatActivity() {
         mcvUserCard = findViewById(R.id.mcvUserCard)
     }
 
+    // gets the user data sent by the previous intent
+    // and loads the UI if the user data can be retrieved
     private fun getUserData() {
         val userData = intent.getParcelableExtra<User>(USER_DATA)
 
         if (userData != null) {
-            loadData(userData)
+            loadUi(userData)
+        } else {
+            Toast.makeText(this, "User details could not be retrieved.", Toast.LENGTH_SHORT).show()
         }
 
     }
 
     @SuppressLint("SetTextI18n")
-    private fun loadData(user: User) {
+    private fun loadUi(user: User) {
 
         ivPortraitDetails.loadImage(user.picture.large)
+
         tvFullNameDetails.text = "${user.name.first} ${user.name.last}"
         tvAddressDetails.text = user.location.street.name
         tvCityDetails.text =
@@ -87,6 +97,7 @@ class UserDetailsActivity : AppCompatActivity() {
 
     }
 
+    // launch email app to send an mail to the user's mail
     private fun navigateToEmail(email: String) {
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:$email")

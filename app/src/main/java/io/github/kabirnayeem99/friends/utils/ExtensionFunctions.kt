@@ -9,7 +9,9 @@ import io.github.kabirnayeem99.friends.R
 /**
  * loads the url into the imageview
  *
- * takes the image Url as a parameter
+ * shows an error placeholder or a loading placeholder when needed
+ *
+ * takes the image Url (nullable [String]) as a parameter
  */
 fun ImageView.loadImage(url: String?) {
 
