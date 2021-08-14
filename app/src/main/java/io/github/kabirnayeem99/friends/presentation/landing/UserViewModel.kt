@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.kabirnayeem99.friends.data.repository.RandomUserRepositoryImpl
 import io.github.kabirnayeem99.friends.domain.model.User
+import io.github.kabirnayeem99.friends.domain.repository.RandomUserRepository
 import io.github.kabirnayeem99.friends.utils.Resource
 import io.github.kabirnayeem99.friends.utils.Utilities
 import io.github.kabirnayeem99.friends.utils.constants.Constants
@@ -21,7 +22,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class UserViewModel
-@Inject constructor(private var repo: RandomUserRepositoryImpl) : ViewModel() {
+@Inject constructor(private var repo: RandomUserRepository) : ViewModel() {
 
 
     // view model will hold the state of live data
