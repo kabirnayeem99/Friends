@@ -8,7 +8,7 @@
     android:layout_margin="20sp"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".ui.activities.UserDetailsActivity">
+    tools:context=".presentation.userdetails.UserDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

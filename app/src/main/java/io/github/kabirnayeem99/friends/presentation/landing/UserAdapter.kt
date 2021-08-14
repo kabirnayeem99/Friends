@@ -1,4 +1,4 @@
-package io.github.kabirnayeem99.friends.ui.adapters
+package io.github.kabirnayeem99.friends.presentation.landing
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import io.github.kabirnayeem99.friends.R
-import io.github.kabirnayeem99.friends.data.viewobject.User
-import io.github.kabirnayeem99.friends.ui.activities.UserDetailsActivity
-import io.github.kabirnayeem99.friends.ui.activities.UserDetailsActivity.Companion.USER_DATA
+import io.github.kabirnayeem99.friends.domain.model.User
+import io.github.kabirnayeem99.friends.presentation.userdetails.UserDetailsActivity
+import io.github.kabirnayeem99.friends.presentation.userdetails.UserDetailsActivity.Companion.USER_DATA
 import io.github.kabirnayeem99.friends.utils.loadImage
 import javax.inject.Inject
 

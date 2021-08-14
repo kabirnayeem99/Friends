@@ -1,4 +1,4 @@
-package io.github.kabirnayeem99.friends.ui.activities
+package io.github.kabirnayeem99.friends.presentation.userdetails
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -6,15 +6,17 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import io.github.kabirnayeem99.friends.data.viewobject.User
+import io.github.kabirnayeem99.friends.domain.model.User
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import com.google.android.material.card.MaterialCardView
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.kabirnayeem99.friends.R
 import io.github.kabirnayeem99.friends.utils.loadImage
 
 
+@AndroidEntryPoint
 class UserDetailsActivity : AppCompatActivity() {
 
     private lateinit var ivPortraitDetails: ImageView

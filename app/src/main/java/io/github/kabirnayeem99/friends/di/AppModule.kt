@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.kabirnayeem99.friends.BuildConfig
-import io.github.kabirnayeem99.friends.data.services.ApiService
+import io.github.kabirnayeem99.friends.data.sources.RemoteDataSource
 import io.github.kabirnayeem99.friends.utils.constants.Constants.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -58,6 +58,6 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): RemoteDataSource = retrofit.create(RemoteDataSource::class.java)
 
 }

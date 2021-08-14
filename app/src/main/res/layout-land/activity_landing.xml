@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="12sp"
-    tools:context=".ui.activities.LandingActivity">
+    tools:context=".presentation.landing.LandingActivity">
 
 
     <ProgressBar

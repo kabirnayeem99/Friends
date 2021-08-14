@@ -1,25 +1,25 @@
-package io.github.kabirnayeem99.friends.data.repo
+package io.github.kabirnayeem99.friends.data.repository
 
 import androidx.lifecycle.MutableLiveData
-import io.github.kabirnayeem99.friends.data.services.ApiService
-import io.github.kabirnayeem99.friends.data.viewobject.ApiResponse
-import io.github.kabirnayeem99.friends.data.viewobject.User
+import io.github.kabirnayeem99.friends.data.sources.RemoteDataSource
+import io.github.kabirnayeem99.friends.domain.model.ApiResponse
+import io.github.kabirnayeem99.friends.domain.model.User
+import io.github.kabirnayeem99.friends.domain.repository.RandomUserRepository
 import io.github.kabirnayeem99.friends.utils.Resource
 import io.github.kabirnayeem99.friends.utils.Utilities
-import io.github.kabirnayeem99.friends.utils.constants.Constants
-import kotlinx.coroutines.CoroutineExceptionHandler
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class RandomUserRepository @Inject constructor(private var apiService: ApiService) {
+class RandomUserRepositoryImpl @Inject constructor(private var remoteDataSource: RemoteDataSource) :
+    RandomUserRepository {
 
 
     /**
      * Gets the User's list from the REST API
      */
-    fun getUserList(userAmount: Int): MutableLiveData<Resource<List<User>>> {
+    override fun getUserList(userAmount: Int): MutableLiveData<Resource<List<User>>> {
         val userLiveData = MutableLiveData<Resource<List<User>>>()
 
 
@@ -30,7 +30,7 @@ class RandomUserRepository @Inject constructor(private var apiService: ApiServic
         }
 
         try {
-            val call: Call<ApiResponse> = apiService.getResponse(userAmount)
+            val call: Call<ApiResponse> = remoteDataSource.getResponse(userAmount)
 
             call.enqueue(object : Callback<ApiResponse> {
                 override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {

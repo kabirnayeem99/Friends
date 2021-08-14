@@ -1,4 +1,4 @@
-package io.github.kabirnayeem99.friends.data.viewobject
+package io.github.kabirnayeem99.friends.domain.model
 
 import com.google.gson.annotations.SerializedName
 

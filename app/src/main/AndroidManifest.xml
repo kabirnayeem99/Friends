@@ -18,10 +18,10 @@
         android:theme="@style/Theme.Friends"
         tools:remove="android:appComponentFactory">
         <activity
-            android:name=".ui.activities.UserDetailsActivity"
+            android:name=".presentation.userdetails.UserDetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.activities.LandingActivity"
+            android:name=".presentation.landing.LandingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
