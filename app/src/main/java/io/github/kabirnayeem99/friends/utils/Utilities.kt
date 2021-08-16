@@ -17,14 +17,14 @@ object Utilities {
      *
      * Returns false if the app is not connected to the internet
      */
-    fun isInternetAvailable(): Boolean {
+     fun isInternetAvailable(): Boolean {
 
         return try {
             val ipAddress: InetAddress = InetAddress.getByName("google.com")
 
             !ipAddress.equals("")
         } catch (e: Exception) {
-            Log.e(TAG, "isInternetAvailable: $e")
+            e.print(TAG, "isInternetAvailable")
             false
         }
     }

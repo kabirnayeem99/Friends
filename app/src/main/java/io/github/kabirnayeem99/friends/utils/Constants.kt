@@ -1,4 +1,4 @@
-package io.github.kabirnayeem99.friends.utils.constants
+package io.github.kabirnayeem99.friends.utils
 
 
 /**

@@ -3,14 +3,13 @@ package io.github.kabirnayeem99.friends.presentation.landing
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.kabirnayeem99.friends.data.repository.RandomUserRepositoryImpl
 import io.github.kabirnayeem99.friends.domain.model.User
 import io.github.kabirnayeem99.friends.domain.repository.RandomUserRepository
-import io.github.kabirnayeem99.friends.utils.Resource
-import io.github.kabirnayeem99.friends.utils.Utilities
-import io.github.kabirnayeem99.friends.utils.constants.Constants
+import io.github.kabirnayeem99.friends.utils.*
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -31,7 +30,12 @@ class UserViewModel
     // reducing both user annoyance and api reload
 
     // to avoid modifiable state leaked to the UI
-    private var userListLiveDataPrivate: MutableLiveData<Resource<List<User>>>? = null
+    private var userListFlowablePrivate: Flowable<Resource<List<User>>> =
+        repo.getUserList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .cache()
+
 
     // to avoid modifiable state leaked to the UI
     private var internetStatusPrivate: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -52,7 +56,7 @@ class UserViewModel
      * or data in the stream
      *
      */
-    var userListLiveData: LiveData<Resource<List<User>>>? = userListLiveDataPrivate
+    var userListFlowable: Flowable<Resource<List<User>>> = userListFlowablePrivate
 
 
     /**
@@ -65,22 +69,6 @@ class UserViewModel
     var internetStatus: LiveData<Boolean> = internetStatusPrivate
 
 
-    init {
-        viewModelScope.launch {
-            loadInternetStatus()
-            fetchUserList()
-        }
-    }
-
-
-    // loads the internet status
-    private fun loadInternetStatus() {
-        internetStatusPrivate.value = Utilities.isInternetAvailable()
-    }
-
-    // fetches the user list from the repository
-    private fun fetchUserList() {
-        userListLiveDataPrivate = repo.getUserList(Constants.RANDOM_USER_AMOUNT)
-    }
+    private val tag = "UserViewModel"
 
 }

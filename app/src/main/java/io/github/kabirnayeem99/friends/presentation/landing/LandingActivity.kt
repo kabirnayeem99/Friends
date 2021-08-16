@@ -17,7 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.kabirnayeem99.friends.BuildConfig
 import io.github.kabirnayeem99.friends.R
 import io.github.kabirnayeem99.friends.utils.Resource
-import io.github.kabirnayeem99.friends.utils.constants.Constants
+import io.github.kabirnayeem99.friends.utils.Constants
+import io.github.kabirnayeem99.friends.utils.print
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 
@@ -28,6 +30,8 @@ class LandingActivity : AppCompatActivity() {
     private lateinit var pbLoading: ProgressBar
     private lateinit var ivNoInternet: ImageView
     private lateinit var parentLayout: View
+
+    private val compositeDisposable = CompositeDisposable()
 
 
     @Inject
@@ -55,59 +59,66 @@ class LandingActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
 
-        userViewModel.userListLiveData?.observe(
-            this@LandingActivity,
-            { resource ->
+        compositeDisposable.add(userViewModel.userListFlowable.subscribe {
 
-                when (resource) {
+                resource ->
 
-                    is Resource.Loading -> {
-                        // if it is loading,
+            when (resource) {
 
-                        // show the loading bar
-                        pbLoading.visibility = View.VISIBLE
-                        ivNoInternet.visibility = View.GONE
+                is Resource.Loading -> {
+                    // if it is loading,
 
-                    }
+                    // show the loading bar
+                    pbLoading.visibility = View.VISIBLE
+                    ivNoInternet.visibility = View.GONE
 
-                    is Resource.Error -> {
-
-                        // if there is an error,
-
-                        // hide the loading bar
-                        pbLoading.visibility = View.GONE
-                        ivNoInternet.visibility = View.VISIBLE
-
-
-                        // log the error message if its a debug build
-                        if (BuildConfig.DEBUG) {
-                            Log.e(tag, "setUpObserver: ${resource.message}")
-                        }
-
-                        // show snack bar based on the error type
-                        showErrorSnackBar()
-                    }
-
-                    is Resource.Success -> {
-
-                        // if there was no error,
-
-                        // hide the loading bar
-                        pbLoading.visibility = View.GONE
-                        ivNoInternet.visibility = View.GONE
-
-                        // show the recycler view
-                        rvFriends.visibility = View.VISIBLE
-
-
-                        // and make the adapter differ consume the user list
-                        userAdapter.differ.submitList(resource.data)
-                    }
                 }
 
-            },
-        )
+                is Resource.Error -> {
 
+                    // if there is an error,
+
+                    // hide the loading bar
+                    pbLoading.visibility = View.GONE
+                    ivNoInternet.visibility = View.VISIBLE
+
+
+                    // log the error message if its a debug build
+                    if (BuildConfig.DEBUG) {
+                        Log.e(tag, "setUpObserver: ${resource.message}")
+                    }
+
+                    // show snack bar based on the error type
+                    showErrorSnackBar()
+                }
+
+                is Resource.Success -> {
+
+                    // if there was no error,
+
+                    // hide the loading bar
+                    pbLoading.visibility = View.GONE
+                    ivNoInternet.visibility = View.GONE
+
+                    // show the recycler view
+                    rvFriends.visibility = View.VISIBLE
+
+
+                    // and make the adapter differ consume the user list
+                    userAdapter.differ.submitList(resource.data)
+                }
+            }
+
+        })
+
+    }
+
+
+    override fun onStop() {
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.dispose()
+        }
+        super.onStop()
     }
 
     // shows snack bar based on error type
@@ -133,6 +144,8 @@ class LandingActivity : AppCompatActivity() {
                         launchWifiSettings()
 
                     } catch (e: Exception) {
+
+                        e.print(tag, "launchwifi set")
 
                         // if for some reason the wifi settings page could not be opened
                         // show another toast message to inform the user it
