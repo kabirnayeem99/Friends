@@ -31,8 +31,8 @@ class LandingActivity : AppCompatActivity() {
     private lateinit var ivNoInternet: ImageView
     private lateinit var parentLayout: View
 
-    private val compositeDisposable = CompositeDisposable()
-
+    @Inject
+    lateinit var compositeDisposable: CompositeDisposable
 
     @Inject
     lateinit var userAdapter: UserAdapter
@@ -59,57 +59,59 @@ class LandingActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
 
-        compositeDisposable.add(userViewModel.userListFlowable.subscribe {
 
-                resource ->
+        compositeDisposable.add(
+            userViewModel
+                .userListFlowable
+                .subscribe { resource ->
 
-            when (resource) {
+                    when (resource) {
 
-                is Resource.Loading -> {
-                    // if it is loading,
+                        is Resource.Loading -> {
+                            // if it is loading,
 
-                    // show the loading bar
-                    pbLoading.visibility = View.VISIBLE
-                    ivNoInternet.visibility = View.GONE
+                            // show the loading bar
+                            pbLoading.visibility = View.VISIBLE
+                            ivNoInternet.visibility = View.GONE
 
-                }
+                        }
 
-                is Resource.Error -> {
+                        is Resource.Error -> {
 
-                    // if there is an error,
+                            // if there is an error,
 
-                    // hide the loading bar
-                    pbLoading.visibility = View.GONE
-                    ivNoInternet.visibility = View.VISIBLE
+                            // hide the loading bar
+                            pbLoading.visibility = View.GONE
+                            ivNoInternet.visibility = View.VISIBLE
 
 
-                    // log the error message if its a debug build
-                    if (BuildConfig.DEBUG) {
-                        Log.e(tag, "setUpObserver: ${resource.message}")
+                            // log the error message if its a debug build
+                            if (BuildConfig.DEBUG) {
+                                Log.e(tag, "setUpObserver: ${resource.message}")
+                            }
+
+                            // show snack bar based on the error type
+                            showErrorSnackBar()
+                        }
+
+                        is Resource.Success -> {
+
+                            // if there was no error,
+
+                            // hide the loading bar
+                            pbLoading.visibility = View.GONE
+                            ivNoInternet.visibility = View.GONE
+
+                            // show the recycler view
+                            rvFriends.visibility = View.VISIBLE
+
+
+                            // and make the adapter differ consume the user list
+                            userAdapter.differ.submitList(resource.data)
+                        }
                     }
 
-                    // show snack bar based on the error type
-                    showErrorSnackBar()
-                }
-
-                is Resource.Success -> {
-
-                    // if there was no error,
-
-                    // hide the loading bar
-                    pbLoading.visibility = View.GONE
-                    ivNoInternet.visibility = View.GONE
-
-                    // show the recycler view
-                    rvFriends.visibility = View.VISIBLE
-
-
-                    // and make the adapter differ consume the user list
-                    userAdapter.differ.submitList(resource.data)
-                }
-            }
-
-        })
+                })
 
     }
 
@@ -130,7 +132,7 @@ class LandingActivity : AppCompatActivity() {
         val snackBar = Snackbar.make(parentLayout, "Something went wrong", Snackbar.LENGTH_SHORT)
 
 
-        userViewModel.internetStatus.observe(this, { internetStatus ->
+        compositeDisposable.add(userViewModel.internetStatus.subscribe { internetStatus ->
             if (!internetStatus) {
 
                 // shows this snack bar when internet is turned off
@@ -142,6 +144,8 @@ class LandingActivity : AppCompatActivity() {
                     try {
                         // to turn on the wifi launch the wifi settings
                         launchWifiSettings()
+                        userViewModel.userListFlowable.retry()
+
 
                     } catch (e: Exception) {
 

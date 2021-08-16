@@ -1,17 +1,16 @@
 package io.github.kabirnayeem99.friends.presentation.landing
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.kabirnayeem99.friends.domain.model.User
 import io.github.kabirnayeem99.friends.domain.repository.RandomUserRepository
+import io.github.kabirnayeem99.friends.utils.NetworkUtilities
 import io.github.kabirnayeem99.friends.utils.Resource
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.FALSE
-import kotlinx.coroutines.TRUE
 import javax.inject.Inject
 
 
@@ -22,7 +21,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class UserViewModel
-@Inject constructor(private var repo: RandomUserRepository) : ViewModel() {
+@Inject constructor(repo: RandomUserRepository) : ViewModel() {
 
 
     // view model will hold the state of live data
@@ -39,7 +38,9 @@ class UserViewModel
 
 
     // to avoid modifiable state leaked to the UI
-    private var internetStatusPrivate: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private var internetStatusPrivate: Observable<Boolean> = NetworkUtilities
+        .observerNetwork()
+        .observeOn(AndroidSchedulers.mainThread())
 
 
     /**
@@ -67,7 +68,7 @@ class UserViewModel
      * It provides [TRUE] value if the internet is connected,
      * or else returns [FALSE] value.
      */
-    var internetStatus: LiveData<Boolean> = internetStatusPrivate
+    var internetStatus: Observable<Boolean> = internetStatusPrivate
 
 
 }
