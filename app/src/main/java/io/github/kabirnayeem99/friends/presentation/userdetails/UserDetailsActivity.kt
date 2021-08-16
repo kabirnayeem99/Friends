@@ -109,6 +109,5 @@ class UserDetailsActivity : AppCompatActivity() {
 
     companion object {
         const val USER_DATA = "user_data"
-        private const val TAG = "UserDetailsActivity"
     }
 }

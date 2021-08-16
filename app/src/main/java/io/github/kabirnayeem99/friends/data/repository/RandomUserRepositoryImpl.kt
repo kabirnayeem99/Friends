@@ -31,5 +31,4 @@ class RandomUserRepositoryImpl @Inject constructor(private var remoteDataSource:
 
     }
 
-    private val tag = "RandomUserRepositoryImp"
 }

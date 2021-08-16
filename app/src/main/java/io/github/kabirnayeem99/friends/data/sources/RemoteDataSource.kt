@@ -2,9 +2,7 @@ package io.github.kabirnayeem99.friends.data.sources
 
 import io.github.kabirnayeem99.friends.domain.model.ApiResponse
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Single
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 

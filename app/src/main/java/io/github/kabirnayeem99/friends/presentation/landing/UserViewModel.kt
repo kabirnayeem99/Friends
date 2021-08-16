@@ -1,17 +1,17 @@
 package io.github.kabirnayeem99.friends.presentation.landing
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.kabirnayeem99.friends.domain.model.User
 import io.github.kabirnayeem99.friends.domain.repository.RandomUserRepository
-import io.github.kabirnayeem99.friends.utils.*
+import io.github.kabirnayeem99.friends.utils.Resource
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.coroutines.*
+import kotlinx.coroutines.FALSE
+import kotlinx.coroutines.TRUE
 import javax.inject.Inject
 
 
@@ -69,7 +69,5 @@ class UserViewModel
      */
     var internetStatus: LiveData<Boolean> = internetStatusPrivate
 
-
-    private val tag = "UserViewModel"
 
 }

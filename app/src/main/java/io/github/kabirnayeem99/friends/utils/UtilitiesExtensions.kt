@@ -17,6 +17,3 @@ fun Exception.print(tag: String, functionName: String) {
     }
 }
 
-fun <T> Single<T>.toLiveData(): LiveData<T> {
-    return LiveDataReactiveStreams.fromPublisher(this.toFlowable())
-}

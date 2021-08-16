@@ -18,8 +18,4 @@ object Constants {
      */
     const val BASE_URL: String = "https://randomuser.me/api/"
 
-    /**
-     * The amount of user that will be fetched from the API
-     */
-    const val RANDOM_USER_AMOUNT: Int = 10
 }
